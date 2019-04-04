@@ -6,6 +6,7 @@ client.on('ready', function () {
   console.log("Bot ready")
 })
 var date = new Date();
+console.log(date)
 // Surveille les messages
 client.on('message', message => {
   if (message.content.includes ('hello')) {
@@ -40,7 +41,7 @@ else{
 }}
 
   if (message.content.includes('!date')) {
-    message.channel.send(date);
+    hook.send({embed:{timestamp: new Date(),}});
   }
 
   if (message.content.includes('!help')) {
@@ -61,13 +62,13 @@ else{
   },
   {
     name: '!clear',
-    value: 'Clear le chat.'
+    value: 'Clear le chat.',
   },
   {
     name: '!date',
     value: 'Affiche la date.',
   }
-]
+],
   }});
 }
 
