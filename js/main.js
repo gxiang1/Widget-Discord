@@ -6,8 +6,6 @@ class Main {
 		this._name = "dash";
 		let widget = new LeMondeWidget(1, this);
 		document.body.appendChild(widget.view.stage);
-		let widget = new discWidget(1, this);
-		document.body.appendChild(widget.view.stage);
 	}
 
 	async get(url) {
