@@ -1,9 +1,9 @@
 class LeMondeWidget extends Widget {
-	
+
 	constructor(id, app) {
 		super(id, LeMondeModel, LeMondeView, LeMondeController, app);
 	}
-	
+
 	setUp() {
 		super.setUp();
 		this.header = true;
@@ -12,37 +12,37 @@ class LeMondeWidget extends Widget {
 		this.sizeY = 0.5;
 		this.radius = 10;
 	}
-	
+
 	async ready() {
 		super.ready();
-		
+
 		this.controller.load();
 	}
-	
+
 }
 
 class LeMondeModel extends WidgetModel {
-	
+
 	constructor() {
 		super();
 	}
-	
+
 	setUp() {
 		super.setUp();
-		
+
 	}
 
 }
 
 class LeMondeView extends WidgetView {
-	
+
 	constructor() {
 		super();
 	}
-	
+
 	setUp() {
 		super.setUp();
-		
+
 	}
 
 	draw() {
@@ -51,25 +51,25 @@ class LeMondeView extends WidgetView {
 		SS.style(this.link, {"fontSize": "10px", "textDecoration": "none"});
 		this.stage.appendChild(this.link);
 	}
-	
+
 	update(title, link) {
 		this.link.innerHTML = title;
 		HH.attr(this.link, {"href": "https://www.lemonde.fr" + link, "target": "_blank"});
 	}
-	
+
 }
 
 class LeMondeController extends WidgetController {
-	
+
 	constructor() {
 		super();
 	}
-	
+
 	setUp() {
 		super.setUp();
-		
+
 	}
-	
+
 	async load() {
 		let result = await this.mvc.main.dom("https://lemonde.fr"); // load web page
 		let domstr = _atob(result.response.dom); // decode result
@@ -78,5 +78,5 @@ class LeMondeController extends WidgetController {
 		let article = new xph().ctx(dom).craft('//*[@id="en-continu"]/div/ul/li[1]/a').firstResult; // find interesting things
 		this.mvc.view.update(article.textContent, article.getAttribute("href"));
 	}
-	
+
 }

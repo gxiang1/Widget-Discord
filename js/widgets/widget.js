@@ -1,7 +1,7 @@
 class Try {
-	
+
 	constructor() {}
-	
+
 	get try() {
 		// https://stackoverflow.com/questions/48696678
 		// + setter https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Proxy/handler/set
@@ -41,36 +41,36 @@ class Try {
 			}
 		});
 	}
-	
+
 }
 
 class Widget extends Try {
-	
+
 	constructor(id, model, view, controller, app) {
 		super();
-		
+
 		this.try.name = this.constructor.name.toLowerCase().replace("widget", "");
 		trace("new widget", this.try.name);
-		
+
 		this.try.id = id;
-		
+
 		this.try.app = app;
-		
+
 		this.try.model = new model();
 		this.try.view = new view();
 		this.try.controller = new controller();
-		
+
 		this.try.model.mvc = {main: this, view: this.try.view, controller: this.try.controller};
 		this.try.view.mvc = {main: this, model: this.try.model, controller: this.try.controller};
 		this.try.controller.mvc = {main: this, model: this.try.model, view: this.try.view};
-		
+
 		this.try.setUp();
-		
+
 		this.try.view.try.draw();
-		
+
 		this.try.ready();
 	}
-	
+
 	setUp() {
 		this.try.radius = 20;
 		this.try.header = false;
@@ -79,12 +79,12 @@ class Widget extends Try {
 		this.try.sizeX = 1;
 		this.try.sizeY = 1;
 	}
-	
+
 	ready() {
 		trace(this.name, "ready");
-		
+
 	}
-	
+
 	/**
 	* @async
 	* @method: dom: load website via server
@@ -94,7 +94,7 @@ class Widget extends Try {
 	async dom(url) {
 		return await this.app.get("/dom/load/" + encodeURIComponent(url));
 	}
-	
+
 	/**
 	* @async
 	* @method: load: load data from widget server class
@@ -104,7 +104,7 @@ class Widget extends Try {
 	async load(method) {
 		return await this.app.get("/dash/load/" + this.try.name + "/" + method);
 	}
-	
+
 	/**
 	* @async
 	* @method: send: post data to widget server class
@@ -115,7 +115,7 @@ class Widget extends Try {
 	async send(method, data) {
 		return await this.app.post("/dash/send/" + this.try.name + "/" + method, data);
 	}
-	
+
 	/**
 	* @method: store: store data in localStorage
 	* @param field: storage field
@@ -124,7 +124,7 @@ class Widget extends Try {
 	store(field, value) {
 		Store.set(this.try.id + "_" + this.try.name + "_" + field, value);
 	}
-	
+
 	/**
 	* @method: restore: get data from localStorage
 	* @param field: storage field
@@ -133,7 +133,7 @@ class Widget extends Try {
 	restore(field) {
 		return Store.get(this.try.id + "_" + this.try.name + "_" + field);
 	}
-	
+
 	/**
 	* @method: has: check field exists in localStorage
 	* @param field: storage field
@@ -142,7 +142,7 @@ class Widget extends Try {
 	has(field) {
 		return Store.has(this.try.id + "_" + this.try.name + "_" + field);
 	}
-	
+
 	/**
 	* @method: destroy: remove field from localStorage
 	* @param field: storage field
@@ -150,69 +150,69 @@ class Widget extends Try {
 	destroy(field) {
 		Store.destroy(this.try.id + "_" + this.try.name + "_" + field);
 	}
-	
-	
+
+
 }
 
 class WidgetModel extends Try {
-	
+
 	constructor() {
 		super();
 		this.try.setUp();
 	}
-	
+
 	setUp() {
-		
+
 	}
-	
+
 }
 
 class WidgetView extends Try {
-	
+
 	constructor() {
 		super();
 		this.try.setUp();
 	}
-	
+
 	setUp() {
-		
+
 	}
-	
+
 	draw() {
-		
+
 		let w = this.try.mvc.main.defaultSize * this.try.mvc.main.sizeX;
 		let h = this.try.mvc.main.defaultSize * this.try.mvc.main.sizeY;
-		
+
 		this.try.stage = HH.create("div");
 		SS.style(this.try.stage, {"position": "relative", "width": w + "px", "height": h + "px", "overflow": "hidden", "backgroundColor": "rgba(200, 200, 200, 1)", "borderRadius": this.try.mvc.main.radius + "px"});
-		
+
 		if(this.try.mvc.main.header) {
 			this.try.header = HH.create("div");
 			SS.style(this.try.header, {"z-index": 100, "userSelect": "none", "width": "100%", "height": "25px", "lineHeight": "25px", "textAlign": "center", "border-top-left-radius": this.try.mvc.main.radius + "px", "border-top-right-radius": this.try.mvc.main.radius + "px","backgroundColor": "#0072ff"});
 			this.try.header.innerHTML = this.try.mvc.main.name;
 			this.try.stage.appendChild(this.try.header);
 		}
-		
+
 		if(this.try.mvc.main.footer) {
 			this.try.footer = HH.create("div");
 			SS.style(this.try.footer, {"position": "absolute", "bottom": "0px", "z-index": 100, "width": "100%", "height": "25px", "lineHeight": "25px", "textAlign": "center", "border-bottom-left-radius": this.try.mvc.main.radius + "px", "border-bottom-right-radius": this.try.mvc.main.radius + "px","backgroundColor": "#0072ff"});
 			this.try.footer.innerHTML = "footer";
 			this.try.stage.appendChild(this.try.footer);
 		}
-		
+
 	}
-	
+
 }
 
 class WidgetController extends Try {
-	
+
 	constructor() {
 		super();
 		this.try.setUp();
 	}
-	
+
 	setUp() {
-		
+
 	}
-	
+
 }

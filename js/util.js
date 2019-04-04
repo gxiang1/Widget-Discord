@@ -25,7 +25,7 @@ function merge(var_args) {
 }
 
 function die() {
-	
+
 }
 
 /**

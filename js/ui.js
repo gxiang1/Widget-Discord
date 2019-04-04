@@ -3,7 +3,7 @@
 * @export
 */
 class HH {
-	
+
 	/**
 	* @export
 	* @method create: create HTML element (document.createElement proxy)
@@ -13,7 +13,7 @@ class HH {
 	static create(name) {
 		return document.createElement(name);
 	}
-	
+
 	/**
 	* @export
 	* @method attr: add attribute(s) to HTML element
@@ -23,7 +23,7 @@ class HH {
 	static attr(element, attributes) {
 		for(let attr in attributes) element.setAttribute(attr, attributes[attr]);
 	}
-	
+
 	/**
 	* @export
 	* @method rmattr: remove attribute(s) from HTML element
@@ -34,12 +34,12 @@ class HH {
 		if(typeof attributes === "string") attributes = attributes.split(" ");
 		for(let attr of attributes) element.removeAttribute(attr);
 	}
-	
+
 	/**
 	* @export
 	* @method insertBefore: insert element before other element
 	* @param {Element} element: HTML element to insert
-	* @param {Element} before: before which element 
+	* @param {Element} before: before which element
 	*/
 	static insertBefore(element, before) {
 		before.parentNode.insertBefore(element, before);
@@ -49,12 +49,12 @@ class HH {
 	* @export
 	* @method insertAfter: insert element after other element
 	* @param {Element} element: HTML element to insert
-	* @param {Element} after: after which element 
+	* @param {Element} after: after which element
 	*/
 	static insertAfter(element, after) {
 		after.parentNode.insertBefore(element, after.nextSibling);
 	}
-	
+
 	/**
 	* @export
 	* @method empty: remove all children
@@ -66,10 +66,10 @@ class HH {
 		while(element.firstChild) {
 			HH.empty(element.firstChild);
 			element.removeChild(element.firstChild);
-		}		
+		}
 		*/
 	}
-	
+
 	/**
 	* @export
 	* @method toString: return complete element string
@@ -81,7 +81,7 @@ class HH {
 		// null element before return string ?
 		return wrapper.innerHTML;
 	}
-	
+
 }
 
 /**
@@ -89,7 +89,7 @@ class HH {
 * @export
 */
 class SS {
-	
+
 	/**
 	* @export
 	* @method style: element styling
@@ -99,7 +99,7 @@ class SS {
 	static style(element, styles) {
 		Object.assign(element.style, styles);
 	}
-	
+
 	/**
 	* @export
 	* @method addClass: add class(es) to element
@@ -113,7 +113,7 @@ class SS {
 			if(cl.indexOf(" " + c + " ") == -1) element.className = (cl + c).trim();
 		}
 	}
-	
+
 	/**
 	* @export
 	* @method removeClass: remove class(es) from element
@@ -127,7 +127,7 @@ class SS {
 			if(cl.indexOf(" " + c + " ") != -1) element.className = cl.replace(" " + c + " ", " ").trim();
 		}
 	}
-	
+
 }
 
 /**
@@ -135,7 +135,7 @@ class SS {
 * @export
 */
 class Events {
-	
+
 	/**
 	* @nocollapse
 	* @export
@@ -147,7 +147,7 @@ class Events {
 	static on(element, event, callback) {
 		element.addEventListener(event, callback);
 	}
-	
+
 	/**
 	* @nocollapse
 	* @export
@@ -159,7 +159,7 @@ class Events {
 	static off(element, event, callback) {
 		element.removeEventListener(event, callback);
 	}
-	
+
 }
 
 /**
@@ -167,19 +167,19 @@ class Events {
 * @export
 */
 class Views {
-	
+
 	static initialize() {
 		this.views = [];
 		this.current = "";
 		this.next = "";
 	}
-	
+
 	/** @export */
 	static add(view) {
 		trace("add view :", view.name);
 		this.views.push(view);
 	}
-	
+
 	/** @export */
 	static remove(view) {
 		trace("remove view :", view.name);
@@ -190,11 +190,11 @@ class Views {
 		}
 		else trace("view", view.name, "doesn't exist");
 	}
-	
+
 	static resize() {
 		this.views.map(view => view.resize(window.Main.fullbounds));
 	}
-	
+
 	/**
 	* @export
 	* @method swap: swap to other view
@@ -206,7 +206,7 @@ class Views {
 		this.doSwap(this.indexFromName(this.next), this.indexFromName(this.current), kill);
 		this.current = this.next;
 	}
-	
+
 	static doSwap(viewIn, viewOut, kill) {
 		if(viewIn != -1) this.swapIn(this.views[viewIn]);
 		if(viewOut != -1) this.swapOut(this.views[viewOut], kill);
@@ -218,27 +218,27 @@ class Views {
 		view["attach"].apply(view, [window.Main.stage]);
 		Fade.in(view.stage, this.swappedIn.bind(this), view);
 	}
-	
+
 	static swappedIn(view) {
 		view["activate"].apply(view, []);
 	}
-	
+
 	static swapOut(view, kill) {
 		trace("swap out", view.name);
 		Fade.out(view.stage, this.swappedOut.bind(this), view, kill);
 	}
-	
+
 	static swappedOut(view, kill) {
 		view["deactivate"].apply(view, []);
 		view["detach"].apply(view, []);
 		if(kill) view.destroy.apply(view, []);
 	}
-	
+
 	static indexFromName(name) {
 		for(let i = 0, l = this.views.length; i < l; i++) if(this.views[i].name == name) return i;
 		return -1;
 	}
-	
+
 }
 
 /**
@@ -246,20 +246,20 @@ class Views {
 * @export
 */
 class Message {
-	
+
 	static initialize() {
-		
+
 		this.pool = [];
 		this.queue = [];
 		this.max = 10;
-		
+
 	}
-	
+
 	static print(msg) {
 		if(this.pool.length >= this.max) this.queue.push(msg);
 		else this.disp(msg);
 	}
-	
+
 	static disp(msg) {
 		let box = HH.create("div");
 		SS.style(box, {backgroundColor: "rgba(0, 0, 0, 0.5)", color: "rgba(255, 255, 255)"});
@@ -273,10 +273,10 @@ class Message {
 * @export
 */
 class Fade {
-	
+
 	/**
 	* @export
-	* @method in: 
+	* @method in:
 	* @param element
 	* @param callback
 	* @param {...*} var_args
@@ -291,10 +291,10 @@ class Fade {
 		SS.removeClass(element, "hide");
 		SS.addClass(element, "show");
 	}
-	
+
 	/**
 	* @export
-	* @method out: 
+	* @method out:
 	* @param element
 	* @param callback
 	* @param {...*} var_args
@@ -309,8 +309,8 @@ class Fade {
 		SS.removeClass(element, "show");
 		SS.addClass(element, "hide");
 	}
-	
-	
+
+
 }
 
 Views.initialize();
