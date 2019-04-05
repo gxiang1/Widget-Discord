@@ -7,6 +7,6 @@ Effacer les messages du channel
 Mini jeu "react"
 Envoyer un message via le webhook
 Intégrer le widget
+Afficher l'heure en emoji
 
 To do :
-Afficher l'heure
