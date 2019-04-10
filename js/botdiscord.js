@@ -162,7 +162,7 @@ client.on('message', message => {
     var gameReact = reactUpDown[Math.floor(Math.random()*reactUpDown.length)];
     message.react(gameReact);
   }
-  if (message.content === '!channel id') {
+  if (message.content.includes '!channel id') {
     // Renvoie l'id du channel
     message.channel.send(message.channel.id);
   }
