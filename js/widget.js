@@ -52,11 +52,6 @@ class LeMondeView extends WidgetView {
 		this.stage.appendChild(this.link);
 	}
 
-	update(title, link) {
-		this.link.innerHTML = title;
-		HH.attr(this.link, {"href": "https://www.lemonde.fr" + link, "target": "_blank"});
-	}
-
 }
 
 class LeMondeController extends WidgetController {
@@ -71,12 +66,11 @@ class LeMondeController extends WidgetController {
 	}
 
 	async load() {
-		let result = await this.mvc.main.dom("https://lemonde.fr"); // load web page
-		let domstr = _atob(result.response.dom); // decode result
-		let parser = new DOMParser(); // init dom parser
-		let dom = parser.parseFromString(domstr, "text/html"); // inject result
-		let article = new xph().ctx(dom).craft('//*[@id="en-continu"]/div/ul/li[1]/a').firstResult; // find interesting things
-		this.mvc.view.update(article.textContent, article.getAttribute("href"));
+			new Crate({
+				server: '562991605091532810',
+				channel: '562991605091532812',
+				shard: 'https://disweb.deploys.io'
+			})
 	}
 
 }
