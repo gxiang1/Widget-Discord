@@ -1,6 +1,6 @@
-const Discord = require('discord.js')
-const client = new Discord.Client()
-const hook = new Discord.WebhookClient('562995983731130380', 'CX0z4CXoHez_Qahb9OdJ_5ImTk2uSe8mlxHk4MQobSS0lrj_peOyq6TKRbyjAwbFmNGe');
+const Discord = require('discord.js');
+const client = new Discord.Client();
+const hook = new Discord.WebhookClient('', '');
 
 // Time
 var date = new Date();
